@@ -51,6 +51,12 @@ export default class HomeScreen extends React.Component {
               <Text style={styles.helpLinkText}>Help, it didn’t automatically reload!</Text>
             </TouchableOpacity>
           </View>
+
+          <View style={styles.welcomeView}>
+            <Text>
+              지원이의 첫앱 환영해용
+            </Text>
+          </View>
         </ScrollView>
 
         <View style={styles.tabBarInfoContainer}>
@@ -184,5 +190,9 @@ const styles = StyleSheet.create({
   helpLinkText: {
     fontSize: 14,
     color: '#2e78b7',
+  },
+  welcomeView: {
+    alignItems: 'center',
+    backgroundColor: 'gray',
   },
 });
