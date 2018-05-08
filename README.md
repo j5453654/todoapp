@@ -1,3 +1,3 @@
 # todoapp
 
-Á¤Áö¿ø
+Jiwon Jung
