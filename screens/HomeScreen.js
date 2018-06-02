@@ -25,59 +25,19 @@ export default class HomeScreen extends React.Component {
         completed:false,
       },
       {
-        description:"김대훈패기",
-        completed:true,
-      },
-      {
         description:"과제",
+        completed:true,
+      },
+      {
+        description:"공부",
         completed:false,
       },
       {
-        description:"하기싫다",
+        description:"컴퓨터커뮤니케이션",
         completed:true,
       },
       {
-        description:"내일발표",
-        completed:true,
-      },
-      {
-        description:"eat",
-        completed:false,
-      },
-      {
-        description:"김대훈패기",
-        completed:true,
-      },
-      {
-        description:"과제",
-        completed:false,
-      },
-      {
-        description:"하기싫다",
-        completed:true,
-      },
-      {
-        description:"내일발표",
-        completed:true,
-      },
-      {
-        description:"eat",
-        completed:false,
-      },
-      {
-        description:"김대훈패기",
-        completed:true,
-      },
-      {
-        description:"과제",
-        completed:false,
-      },
-      {
-        description:"하기싫다",
-        completed:true,
-      },
-      {
-        description:"내일발표",
+        description:"201500434",
         completed:true,
       },
     ];
