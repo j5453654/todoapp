@@ -147,9 +147,23 @@ export default class HomeScreen extends React.Component {
       .then(() => this.loadToDoList());
   }
 
-  completeToDo = (index) => {
+  makeToDoCompleted = (index) => {
     const newToDoList = this.state.toDoList.concat();
     newToDoList[index].completed = true;
+    AsyncStorage.setItem('@MySuperStore:toDoList', JSON.stringify(newToDoList))
+      .then(() => this.loadToDoList());
+  }
+
+  makeToDoInCompleted = (index) => {
+    const newToDoList = this.state.toDoList.concat();
+    newToDoList[index].completed = false;
+    AsyncStorage.setItem('@MySuperStore:toDoList', JSON.stringify(newToDoList))
+      .then(() => this.loadToDoList());
+  }
+
+  removeToDo = (index) => {
+    const newToDoList = this.state.toDoList.concat();
+    newToDoList.splice(index, 1); // https://stackoverflow.com/a/5767357
     AsyncStorage.setItem('@MySuperStore:toDoList', JSON.stringify(newToDoList))
       .then(() => this.loadToDoList());
   }
@@ -169,11 +183,25 @@ export default class HomeScreen extends React.Component {
               <TouchableOpacity
                 style={styles.toDoListItem}
                 onPress={() => {
+                  if (item.completed === true) {
+                    this.makeToDoInCompleted(index);
+                  } else {
+                    Alert.alert(
+                      '오늘의 한마디',
+                      Lodash.sample(sentenceList),
+                      [
+                        { text: 'OK', onPress: () => this.makeToDoCompleted(index) },
+                      ],
+                    );
+                  }
+                }}
+                onLongPress={() => {
                   Alert.alert(
-                    '오늘의 한마디',
-                    Lodash.sample(sentenceList),
+                    '할 일 삭제',
+                    '정말로 삭제하시겠습니까?',
                     [
-                      { text: 'OK', onPress: () => this.completeToDo(index) },
+                      { text: '확인', onPress: () => this.removeToDo(index) },
+                      { text: '취소', onPress: () => null },
                     ],
                   );
                 }}
