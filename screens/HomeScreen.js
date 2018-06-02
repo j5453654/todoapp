@@ -54,11 +54,7 @@ export default class HomeScreen extends React.Component {
             JIWON TO DO
           </Text>
         </View>
-        <View style={styles.plus}>
-          <Text style={styles.plusFont}>
-            +
-          </Text>
-        </View>
+        
         <FlatList
           data={this.loadToDoList()}
           renderItem={
@@ -70,6 +66,12 @@ export default class HomeScreen extends React.Component {
               </View>
           }
         />
+        
+        <TouchableOpacity style={styles.plus}>
+          <Text style={styles.plusFont}>
+            +
+          </Text>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -139,7 +141,7 @@ const styles = StyleSheet.create({
   headerTitleText: {
     fontSize: 20,
     fontWeight: 'bold',
-  }, 
+  },
   plus: {
     position: 'absolute', 
     bottom: 20,
