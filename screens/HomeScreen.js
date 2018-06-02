@@ -8,7 +8,10 @@ import {
   Modal,
   TextInput,
   AsyncStorage,
+  Alert,
 } from 'react-native';
+
+import Lodash from 'lodash';
 
 const styles = StyleSheet.create({
   container: {
@@ -95,6 +98,21 @@ const styles = StyleSheet.create({
   },
 });
 
+const sentenceList = [
+  '오늘도 화이팅!',
+  '꿈에 한발짝 더!',
+  '수고했어!',
+  '우리가 노력 없이 얻는 거의 유일한 것은 노년이다',
+  '인생에서 원하는 것을 얻기 위한 첫 번째 단계는 내가 무엇을 원하는지 결정하는 것이다.',
+  '많이 보고 많이 겪고 많이 공부하는 것은 배움의 세 기둥이다.',
+  '당신의 행복은 무엇이 당신의 영혼을 노래하게 하는가에 따라 결정된다',
+  '기운과 끈기는 모든 것을 이겨낸다.',
+  '운명은 우연이 아닌, 선택이다. 기다리는 것이 아니라, 성취하는 것이다.',
+  '여가시간을 가지려면 시간을 잘 써라.',
+  '인간의 삶 전체는 단지 한 순간에 불과하다. 인생을 즐기자.',
+  '경험을 현명하게 사용한다면, 어떤 일도 시간 낭비는 아니다.',
+];
+
 export default class HomeScreen extends React.Component {
   static navigationOptions = {
     header: null,
@@ -150,7 +168,15 @@ export default class HomeScreen extends React.Component {
             ({ item, index }) => (
               <TouchableOpacity
                 style={styles.toDoListItem}
-                onPress={() => { this.completeToDo(index); }}
+                onPress={() => {
+                  Alert.alert(
+                    '오늘의 한마디',
+                    Lodash.sample(sentenceList),
+                    [
+                      { text: 'OK', onPress: () => this.completeToDo(index) },
+                    ],
+                  );
+                }}
               >
                 <Text style={
                   (item.completed === true)
