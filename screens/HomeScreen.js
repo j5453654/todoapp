@@ -48,9 +48,15 @@ export default class HomeScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
+    
         <View style={styles.header}>
           <Text style={styles.headerTitleText}>
             JIWON TO DO
+          </Text>
+        </View>
+        <View style={styles.plus}>
+          <Text style={styles.plusFont}>
+            +
           </Text>
         </View>
         <FlatList
@@ -133,9 +139,24 @@ const styles = StyleSheet.create({
   headerTitleText: {
     fontSize: 20,
     fontWeight: 'bold',
-
+  }, 
+  plus: {
+    position: 'absolute', 
+    bottom: 20,
+    right: 20,
+    backgroundColor: '#f2e3f7',
+    height: 62,
+    width: 62,
+    justifyContent: 'center',    
+    alignItems: 'center',
+    borderRadius: 62/2,
   },
-  welcomeContainer: {
+  plusFont: {
+    fontSize: 30,
+    fontWeight: 'bold',
+    color: 'white',
+  },
+   welcomeContainer: {
     alignItems: 'center',
     marginTop: 10,
     marginBottom: 20,
