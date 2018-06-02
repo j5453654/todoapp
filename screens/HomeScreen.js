@@ -21,6 +21,11 @@ const styles = StyleSheet.create({
   toDoListItemText: {
     fontSize: 20,
   },
+  completedToDoListItemText: {
+    fontSize: 20,
+    textDecorationLine: 'line-through',
+    color: '#edeaec',
+  },
   header: {
     height: 62,
     backgroundColor: '#e1a7f9',
@@ -94,6 +99,7 @@ export default class HomeScreen extends React.Component {
   static navigationOptions = {
     header: null,
   };
+
   state = {
     modalVisible: false,
     text: '',
@@ -123,6 +129,13 @@ export default class HomeScreen extends React.Component {
       .then(() => this.loadToDoList());
   }
 
+  completeToDo = (index) => {
+    const newToDoList = this.state.toDoList.concat();
+    newToDoList[index].completed = true;
+    AsyncStorage.setItem('@MySuperStore:toDoList', JSON.stringify(newToDoList))
+      .then(() => this.loadToDoList());
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -134,21 +147,29 @@ export default class HomeScreen extends React.Component {
         <FlatList
           data={this.state.toDoList}
           renderItem={
-            ({ item }) => (
-              <View style={styles.toDoListItem}>
-                <Text style={styles.toDoListItemText}>
+            ({ item, index }) => (
+              <TouchableOpacity
+                style={styles.toDoListItem}
+                onPress={() => { this.completeToDo(index); }}
+              >
+                <Text style={
+                  (item.completed === true)
+                    ? styles.completedToDoListItemText : styles.toDoListItemText
+                  }
+                >
                   {item.description}
                 </Text>
-              </View>
+              </TouchableOpacity>
             )
           }
+          keyExtractor={(item, index) => `${item.description}/${index}`}
         />
 
         <TouchableOpacity
           style={styles.plus}
           onPress={() => {
-                    this.setModalVisible(true);
-                  }}
+            this.setModalVisible(true);
+          }}
         >
           <Text style={styles.plusFont}>
             +
