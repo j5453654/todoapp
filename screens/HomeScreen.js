@@ -7,6 +7,7 @@ import {
   FlatList,
   Modal,
   TextInput,
+  AsyncStorage,
 } from 'react-native';
 
 const styles = StyleSheet.create({
@@ -96,36 +97,30 @@ export default class HomeScreen extends React.Component {
   state = {
     modalVisible: false,
     text: '',
+    toDoList: [],
   };
+
+  componentDidMount() {
+    this.loadToDoList();
+  }
 
   setModalVisible(visible) {
     this.setState({ modalVisible: visible });
   }
 
-  loadToDoList() {
-    const toDoList = [
-      {
-        description:"eat",
-        completed:false,
-      },
-      {
-        description:"과제",
-        completed:true,
-      },
-      {
-        description:"공부",
-        completed:false,
-      },
-      {
-        description:"컴퓨터커뮤니케이션",
-        completed:true,
-      },
-      {
-        description:"201500434",
-        completed:true,
-      },
-    ];
-    return toDoList;
+  loadToDoList = () =>
+    AsyncStorage.getItem('@MySuperStore:toDoList')
+      .then((toDoListJSonString) => {
+        const toDoList = (toDoListJSonString !== null)
+          ? JSON.parse(toDoListJSonString)
+          : [];
+        this.setState({ toDoList });
+      });
+
+  addToDoList = (toDoText) => {
+    const newToDoList = this.state.toDoList.concat([{ description: toDoText, completed: false }]);
+    return AsyncStorage.setItem('@MySuperStore:toDoList', JSON.stringify(newToDoList))
+      .then(() => this.loadToDoList());
   }
 
   render() {
@@ -137,7 +132,7 @@ export default class HomeScreen extends React.Component {
           </Text>
         </View>
         <FlatList
-          data={this.loadToDoList()}
+          data={this.state.toDoList}
           renderItem={
             ({ item }) => (
               <View style={styles.toDoListItem}>
@@ -181,8 +176,9 @@ export default class HomeScreen extends React.Component {
                 <TouchableOpacity
                   style={styles.okButton}
                   onPress={() => {
-                            this.setModalVisible(!this.state.modalVisible);
-                          }}
+                    this.addToDoList(this.state.text);
+                    this.setModalVisible(!this.state.modalVisible);
+                  }}
                 >
                   <Text style={styles.okText}>
                     확인
@@ -191,8 +187,8 @@ export default class HomeScreen extends React.Component {
                 <TouchableOpacity
                   style={styles.okButton}
                   onPress={() => {
-                            this.setModalVisible(!this.state.modalVisible);
-                          }}
+                    this.setModalVisible(!this.state.modalVisible);
+                  }}
                 >
                   <Text style={styles.okText}>
                     취소
